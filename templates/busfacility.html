@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Side Navigation Bar</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}">
+	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+    <style>
+           .logout {
+    position: absolute;
+    bottom: 20px; /* Adjust the distance from the bottom as needed */
+    right: 40px;
+    width: 100%;
+    text-align: center;
+}
+
+.logout a {
+    color: #bdb8d7; /* Default color */
+    text-decoration: none;
+}
+
+.logout a:hover {
+    color: #fff; /* Color on hover */
+    height:40px;
+}
+
+    .wrapper .main_content .info div{
+      margin-bottom: 20px;
+    }
+    .dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #4b4276;
+    width:184px;
+
+}
+
+.dropdown-menu a {
+    display: block;
+    color: #14c64d;
+    text-decoration: none;
+    padding: 10px;
+
+}
+
+.dropdown-menu li:hover a {
+    background-color: #594f8d;
+    color: #fff;
+}
+.highlight {
+        background: white;
+        }
+        li{
+            border-radius: 20px;
+        }
+        .highlight:hover{
+            cursor:pointer;
+        }
+
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+
+    </style>
+</head>
+<body style="display: flex;">
+
+<div class="wrapper">
+    <div class="sidebar">
+        <h2>PROFILE</h2>
+        <ul>
+            <li><a href="{{ url_for('home') }}"><i class="fas fa-home"></i>Home</a></li>
+            <li class="highlight"><a href="{{ url_for('facility') }}"><i class="fas fa-bus"></i>Bus facilities</a></li>
+            <li><a href="{{ url_for('payment') }}" "><i class="fas fa-credit-card"></i>Payment</a></li>
+            <li><a href="{{ url_for('contact') }}"><i class="fas fa-phone"></i>Contact</a></li>
+            <li id="moreDropdown">
+                    <a href="#"><i class="fas fa-info-circle"></i>More</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('terms') }}">Terms and Conditions</a></li>
+                        <li><a href="{{ url_for('privacy') }}">Privacy Policy</a></li>
+                    </ul>
+                </li>
+        </ul>
+
+        <div class="logout">
+                <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+    </div>
+</div>
+    <div class="main_content">
+
+        <div class="container-fluid">
+            <h4 align="center" class="heading">Transport Facility</h4>
+            <div align="center" class="table-container">
+                <table class="table">
+                    <tr>
+                        <td>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td colspan="2"><div id="t2"><font color="000"><strong>COLLEGE TRANSPORT FACILITIES</strong></font></div></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><div id="t2"><font color="000">Routes:</font></div></td>
+                                </tr>
+                                <!-- Your table content -->
+                                <tr>
+                                    <td><font color="000">Erode - College </font></td>
+                                    <td><font color="000"> 20 Buses</font></td>
+                                </tr>
+                                <tr>
+                                    <td><font color="000">Sathyamangalam-College </font></td>
+                                    <td><font color="000"> 2 Buses</font></td>
+                                </tr>
+                                <tr>
+                                    <td><font color="000">Gobi - College </font></td>
+                                    <td><font color="000"> 6 Buses</font></td>
+                                </tr>
+                                <tr>
+                                    <td><font color="000">Athani- College </font></td>
+                                    <td><font color="000"> 2 Buses</font></td>
+                                </tr>
+                                <tr>
+                                    <td><font color="000">Anthiyur- College </font></td>
+                                    <td><font color="000"> 2 Buses</font></td>
+                                </tr>
+                                <tr>
+                                    <td><font color="000">Komarapalayam- College </font></td>
+                                    <td><font color="000"> 2 Buses</font></td>
+                                </tr>
+                                <tr>
+                                    <td><font color="000">Bhavani - College </font></td>
+                                    <td><font color="000"> 2 Buses</font></td>
+                                </tr>
+                                <tr>
+                                    <td><font color="000">Ammapettai - College </font></td>
+                                    <td><font color="000"> 1 Bus</font></td>
+                                </tr>
+                                <tr>
+                                    <td><font color="000">Edapadi- College </font></td>
+                                    <td><font color="000"> 1 Bus</font></td>
+                                </tr>
+                                <tr>
+                                    <td><font color="000">Sankagiri- College </font></td>
+                                    <td><font color="000"> 2 Buses</font></td>
+                                </tr>
+                                <tr>
+                                    <td><font color="000">Tiruchengode- College </font></td>
+                                    <td><font color="000"> 3 Buses</font></td>
+                                </tr>
+                                <tr>
+                                    <td><font color="000">SPB Colony - College </font></td>
+                                    <td><font color="000"> 2 Buses</font></td>
+                                </tr>
+                                <tr>
+                                    <td><font color="000">Kodumudi- College </font></td>
+                                    <td><font color="000"> 1 Bus</font></td>
+                                </tr>
+                                <tr>
+                                    <td><font color="000">Vellakovil- College </font></td>
+                                    <td><font color="000"> 1 Bus</font></td>
+                                </tr>
+                                <tr>
+                                    <td><font color="000">Kangeyam- College </font></td>
+                                    <td><font color="000"> 3 Buses</font></td>
+                                </tr>
+                                <tr>
+                                    <td><font color="000">Palladam- College </font></td>
+                                    <td><font color="000"> 1 Bus</font></td>
+                                </tr>
+                                <tr>
+                                    <td><font color="000">Tiruppur - College </font></td>
+                                    <td><font color="000"> 13 Buses</font></td>
+                                </tr>
+                                <tr>
+                                    <td><font color="000">Avinashi- College </font></td>
+                                    <td><font color="000"> 1 Bus</font></td>
+                                </tr>
+                                <tr>
+                                    <td><font color="000">Nambiyur- College </font></td>
+                                    <td><font color="000"> 1 Bus</font></td>
+                                </tr>
+                                <tr>
+                                    <td><font color="000">Appakoodal -College </font></td>
+                                    <td><font color="000"> 1 Bus</font></td>
+                                </tr>
+                                <tr>
+                                    <td><font color="000">Chennimalai- College </font></td>
+                                    <td><font color="000"> 2 Buses</font></td>
+                                </tr>
+                                <tr>
+                                    <td><font color="000">Sivagiri - College </font></td>
+                                    <td><font color="000"> 2 Buses</font></td>
+                                </tr>
+                                <tr>
+                                    <td><font color="000">Nathakadiyur- College </font></td>
+                                    <td><font color="000"> 1 Bus</font></td>
+                                </tr>
+                                <tr>
+                                    <td><font color="000">Thandapalayam- College </font></td>
+                                    <td><font color="000"> 1 Bus</font></td>
+                                </tr>
+                                <tr>
+                                    <td><font color="000">Getticheviyur- College </font></td>
+                                    <td><font color="000"> 1 Bus</font></td>
+                                </tr>
+                                <tr>
+                                    <td><font color="000">Perundurai Bus Stand - College </font></td>
+                                    <td><font color="000"> 7 Buses</font></td>
+                                </tr>
+                            </table>
+                        </td>
+
+                    </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <table class="table">
+                        <tr>
+                            <td colspan="2" >  <font color="000"><br />
+                                Frequent trips between Perundurai and College from 7.40A.M. to 8.20P.M. and 4.15P.M. to 7.15P.M.<br />
+                                <br />
+                                Location of the College: 3.00 Kms. from Perundurai Bus Stand on the way to Perundurai Railway Station.<br />
+                                <br />
+                                Nearest Railway Junction : Erode Junction(18 Kms.)<br />
+                                <br />
+                                Nearest Airport : Coimbatore (70 Kms.)<br />
+                            </font></td>
+                        </tr>
+                    </table>
+                </table>
+                <img src="{{ url_for('static', filename='transport (1).jpg') }}" alt="" width="600" height="400" / />
+            </div>
+        </div>
+
+    </div>
+    <script>
+        // JavaScript for handling dropdown menu
+        document.addEventListener("DOMContentLoaded", function() {
+            var moreDropdown = document.getElementById("moreDropdown");
+            var dropdownMenu = moreDropdown.querySelector(".dropdown-menu");
+
+            function handleDropdownItemClick(event) {
+        event.preventDefault();
+        var target = event.target;
+        if (target.tagName === "A") {
+            var href = target.getAttribute("href");
+            if (href) {
+                window.location.href = href; // Redirect to the link's href
+            }
+        }
+    }
+
+    // Toggle dropdown on click
+    moreDropdown.addEventListener("click", function(event) {
+        event.preventDefault();
+        if (dropdownMenu.style.display === "none" || dropdownMenu.style.display === "") {
+            dropdownMenu.style.display = "block";
+        } else {
+            dropdownMenu.style.display = "none";
+        }
+    });
+
+    // Close dropdown if clicked outside
+    document.addEventListener("click", function(event) {
+        if (!moreDropdown.contains(event.target)) {
+            dropdownMenu.style.display = "none";
+        }
+    });
+
+    // Add click event listener to dropdown menu items
+    dropdownMenu.addEventListener("click", handleDropdownItemClick);
+});
+    </script>
+
+</body>
+</html>

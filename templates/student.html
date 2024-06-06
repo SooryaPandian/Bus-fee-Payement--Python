@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Detail</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 50%;
+            margin: auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button[type="submit"] {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        p {
+            text-align: center;
+            font-style: italic;
+            color: #888;
+        }
+        nav {
+            background-color: #333;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            float: left;
+        }
+
+        nav ul li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav ul li a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .logout a {
+            color: #bdb8d7;
+            text-decoration: none;
+        }
+
+        .logout a:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/admin">Admin</a></li>
+            <li><a href="/transport">Bus Details</a></li>
+             <li><a href="/student">Student details</a></li>
+        </ul>
+        <div class="logout">
+            <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </nav>
+
+    <h1>Student Detail</h1>
+
+    <!-- Student Search Form -->
+    <form action="/student_get" method="POST">
+        <label for="roll_number">Enter Roll Number:</label>
+        <input type="text" id="roll_number" name="roll_number">
+        <button type="submit">Search</button>
+    </form>
+
+    {% if student %}
+        <!-- Display Student Detail -->
+        <table>
+            <tr>
+                <th>Roll Number</th>
+                <td>{{ student[1] }}</td>
+            </tr>
+            <tr>
+                <th> Name</th>
+                <td>{{ student[3] }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ student[5] }}</td>
+            </tr>
+            <tr>
+                <th>Bus Number</th>
+                <td>{{ student[7] }}</td>
+            </tr>
+            <tr>
+                <th>Bus Stop</th>
+                <td>{{ student[8] }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ "Paid" if student[6] == 1 else "Not Paid" }}</td>
+            </tr>
+        </table>
+    {% else %}
+        <!-- Display message if no student is found -->
+        <p>No student found.</p>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Feedback, Payment, and Transaction History</title>
+    <style>
+        /* Styles for animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Form styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 0.5s ease forwards;
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+
+        .form-container:hover {
+            transform: translateY(-10px);
+        }
+
+        label,
+        input[type="text"],
+        textarea {
+            display: block;
+            margin-bottom: 15px;
+            width: 100%;
+            border: 0;
+            padding: 10px 5px;
+            background: white no-repeat;
+            background-image: linear-gradient(to bottom, #1abc9c, #1abc9c), linear-gradient(to bottom, silver, silver);
+            background-size: 0 2px, 100% 1px;
+            background-position: 50% 100%, 50% 100%;
+            /* animation solely on background-size */
+            transition: background-size 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+        }
+
+        input[type="text"]:hover,
+        textarea:hover {
+            /* sizes for the 2 images (focus state) */
+            background-size: 100% 2px, 100% 1px;
+            outline: none;
+        }
+
+        button,
+        .buttonClass {
+            background: linear-gradient(#2e466e, #415989);
+            font-size: 14px;
+            /* Adjust font size for buttons */
+            font-family: Arial;
+            width: 100px;
+            /* Reduce button width */
+            height: 40px;
+            /* Reduce button height */
+            border-width: 1px;
+            color: #fff;
+            border-color: #1f2f47;
+            border-radius: 4px;
+            box-shadow: inset 0px 0px 15px 3px #23395e;
+            text-shadow: inset 0px 1px 0px #263666;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover,
+        .buttonClass:hover {
+            background: linear-gradient(#415989, #2e466e);
+        }
+
+        /* Transaction history styles */
+        .transaction-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .transaction-list li {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .transaction-list .hidden {
+            display: none;
+        }
+
+        .paypal-container {
+            text-align: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin:0 auto;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body text-align: center>
+    <div id="session-rollno">
+        <!-- Display session roll number here -->
+        {% if 'rollno' in session %}
+        <p>Session Roll Number: {{ session['rollno'] }}</p>
+        {% endif %}
+        <h1>User Details</h1>
+        <table>
+            <tr>
+                <th>Attribute</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td><strong>Roll No:</strong></td>
+                <td>{{ user_details[1] }}</td>
+            </tr>
+
+            <tr>
+                <td><strong>First Name:</strong></td>
+                <td>{{ user_details[3] }}</td>
+            </tr>
+            <tr>
+                <td><strong>Last Name:</strong></td>
+                <td>{{ user_details[4] }}</td>
+            </tr>
+            <tr>
+                <td><strong>Email:</strong></td>
+                <td>{{ user_details[5] }}</td>
+            </tr>
+
+            <tr>
+                <td><strong>Bus Number:</strong></td>
+                <td>{{ user_details[7] }}</td>
+            </tr>
+            <tr>
+                <td><strong>Bus Stop:</strong></td>
+                <td>{{ user_details[8] }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="form-container">
+        <h2>Payment</h2>
+
+
+            <button type="button" class="buttonClass" onclick="initiatePayPal()">Make Payment</button>
+
+            <!-- PayPal button container -->
+            <div class="paypal-container" id="paypal-button-container"></div>
+
+    </div>
+
+
+    <div class="form-container">
+        <h2>Transaction History</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>2024-03-12</td>
+                    <td>$50</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>2024-03-11</td>
+                    <td>$100</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>2024-03-10</td>
+                    <td>$75</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <!--

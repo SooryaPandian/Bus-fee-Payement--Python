@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transport Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #108429;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        nav {
+            background-color: #333;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            float: left;
+        }
+
+        nav ul li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav ul li a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .logout a {
+            color: #bdb8d7;
+            text-decoration: none;
+        }
+
+        .logout a:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/admin">Admin</a></li>
+            <li><a href="/transport">Bus Details</a></li>
+             <li><a href="/student">Student details</a></li>
+        </ul>
+        <div class="logout">
+            <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </nav>
+    <h1>Bus Details</h1>
+
+    <!-- Form to select bus number -->
+    <form method="POST" action="/show_transport">
+        <label for="bus_number">Select Bus Number:</label>
+        <select id="bus_number" name="bus_number">
+            <option value="">All</option>
+            {% for bus_number in bus_numbers %}
+            <option value="{{ bus_number }}">{{ bus_number }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Show Details</button>
+    </form>
+
+    <!-- Table to display bus details -->
+    {% if bus_details %}
+    <table border="1">
+        <tr>
+            <th>Bus Number</th>
+            <th>Route</th>
+            <th>Amount</th>
+        </tr>
+        {% for bus_detail in bus_details %}
+        <tr>
+            <td>{{ bus_detail[0] }}</td>
+            <td>{{ bus_detail[1] }}</td>
+            <td>${{ bus_detail[2] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</body>
+</html>

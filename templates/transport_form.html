@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transport Form</title>
+    <style>
+        /* Your CSS code here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ccc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .box {
+            position: relative;
+            width: 300px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(0, 0, 0);
+            overflow: hidden;
+            border-radius: 20px;
+        }
+
+        .box::before {
+            content: '';
+            position: absolute;
+            width: 180px;
+            height: 140%;
+            background-color: white;
+            box-shadow: 0 0 20px rgb(8, 8, 8);
+            animation: animate 4s linear infinite;
+        }
+
+        .box::after {
+            content: '';
+            position: absolute;
+            inset: 10px;
+            background-color: rgb(4, 75, 97);
+            border-radius: 16px;
+        }
+
+        @keyframes animate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        form {
+
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            width: 250px;
+            max-width: 100%;
+            animation: fadeIn 0.5s ease-in-out;
+            position: relative;
+            z-index: 1; /* Ensure the form is above the animated box */
+            display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: x-large;
+            color: #060000;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+            color: #080303;
+            animation: inputFadeIn 0.5s ease-in-out;
+        }
+
+        input[type="text"]:focus {
+            border-color: #007bff;
+        }
+
+        input[type="text"]::placeholder {
+            color: #999;
+        }
+
+        button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    outline: none;
+    animation: buttonFadeIn 0.5s ease-in-out;
+    display: block;
+    margin: 0 auto; /* Center horizontally */
+}
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        button[type="submit"]::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: all 0.5s ease;
+            border-radius: 50%;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+        }
+
+        button[type="submit"]:hover::before {
+            width: 0;
+            height: 0;
+        }
+
+        button[type="submit"] span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes inputFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes buttonFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes inputShake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+
+        input[type="text"].error {
+            animation: inputShake 0.5s ease-in-out;
+        }
+
+        @keyframes buttonPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        button[type="submit"]:hover {
+            animation: buttonPulse 0.5s infinite alternate;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <form action="{{ url_for('show_transport') }}" method="POST">
+            <label for="bus_number">Enter Bus Number</label>
+            <input type="text" id="bus_number" name="bus_number" placeholder="E.g., BUS123" required>
+            <button type="submit"><span>Submit</span></button>
+        </form>
+    </div>
+</body>
+</html>

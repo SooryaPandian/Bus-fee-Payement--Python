@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Ludiflex | Login & Registration</title>
+</head>
+<body>
+<div class="wrapper">
+    <nav class="nav">
+        <div class="nav-menu" id="navMenu">
+            <ul>
+                <li><a href="#" class="link active">Login</a></li>
+{#                <li><a href="{{ url_for('transport') }}" class="link">Bus Details</a></li>#}
+                <li><a href="{{ url_for('admin') }}" class="link">Admin</a></li>
+{#                <li><a href="#" class="link">Contact</a></li>#}
+            </ul>
+        </div>
+        <div class="nav-button">
+            <button class="btn white-btn" id="loginBtn" onclick="login()">Sign In</button>
+            <button class="btn" id="registerBtn" onclick="register()">Sign Up</button>
+        </div>
+        <div class="nav-menu-btn">
+            <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+        </div>
+    </nav>
+
+    <div class="form-box">
+        <div class="login-container" id="login">
+            <div class="top">
+                <span>Don't have an account? <a href="#" onclick="register()">Sign Up</a></span>
+                <header>Login</header>
+            </div>
+            <form action="{{ url_for('login') }}" method="POST">
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="Roll No" name="rollno">
+                    <i class="bx bx-user"></i>
+                </div>
+                <div class="input-box">
+                    <input type="date" class="input-field" placeholder="Password" name="password">
+                    <i class="bx bx-lock-alt"></i>
+                </div>
+                <div class="input-box">
+                    <input type="submit" class="submit" value="Sign In">
+                </div>
+            </form>
+{#            <div class="two-col">#}
+{#                <div class="one">#}
+{#                    <input type="checkbox" id="login-check">#}
+{#                    <label for="login-check"> Remember Me</label>#}
+{#                </div>#}
+{#                <div class="two">#}
+{#                    <label><a href="#">Forgot password?</a></label>#}
+{#                </div>#}
+{#            </div>#}
+        </div>
+        <div class="register-container" id="register" >
+            <div class="top">
+                <span>Have an account? <a href="#" onclick="login()">Login</a></span>
+                <header>Sign Up</header>
+            </div>
+        <form action="{{ url_for('register') }}" method="POST">
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="Roll No" name="rollno">
+                    <i class="bx bx-book"></i>
+                </div>
+                <div class="input-box">
+                    <input type="date" class="input-field" placeholder="Password" name="password">
+                    <i class="bx bx-lock-alt"></i>
+                </div>
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="Firstname" name="firstname">
+                    <i class="bx bx-user"></i>
+                </div>
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="Lastname" name="lastname">
+                    <i class="bx bx-user"></i>
+                </div>
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="Email" name="email">
+                    <i class="bx bx-envelope"></i>
+                </div>
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="Bus Number" name="busnumber">
+                    <i class="bx bx-bus"></i>
+                </div>
+
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="Bus Stop" name="busstop">
+                    <i class="bx bx-bus-stop"></i>
+                </div>
+                <div class="input-box">
+                    <input type="submit" class="submit" value="Register">
+                </div>
+            </form>
+
+            <div class="two-col">
+                <div class="one">
+                    <input type="checkbox" id="register-check">
+                    <label for="register-check"> Remember Me</label>
+                </div>
+                <div class="two">
+                    <label><a href="#">Terms & conditions</a></label>
+                </div>
+            </div>
+        </div>
+        
+        <div id="registrationSuccessMessage" class="message-box" style="display: none;">
+            <p class="success-message">Successfully registered!</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    var a = document.getElementById("loginBtn");
+    var b = document.getElementById("registerBtn");
+    var x = document.getElementById("login");
+    var y = document.getElementById("register");
+
+    function login() {
+        x.style.left = "4px";
+        y.style.right = "-520px";
+        a.className += " white-btn";
+        b.className = "btn";
+        x.style.opacity = 1;
+        y.style.opacity = 0;
+    }
+
+    function register() {
+        x.style.left = "-510px";
+        y.style.right = "5px";
+        a.className = "btn";
+        b.className += " white-btn";
+        x.style.opacity = 0;
+        y.style.opacity = 1;
+    }
+</script>
+
+<script>
+    function getBusStops() {
+        var busNumber = document.getElementById("busNumberInput").value;
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/get_bus_stops?bus_number=" + busNumber, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var stopsData = JSON.parse(xhr.responseText);
+                populateBusStopsDropdown(stopsData);
+            }
+        };
+        xhr.send();
+    }
+
+    function populateBusStopsDropdown(stopsData) {
+        var dropdownContainer = document.getElementById("busStopsDropdown");
+        dropdownContainer.innerHTML = ""; // Clear previous content
+        if (stopsData.length > 0) {
+            var dropdownHTML = "<label for='busStopsSelect'>Select Bus Stop:</label>";
+            dropdownHTML += "<select id='busStopsSelect' name='busstop'>";
+            stopsData.forEach(function(stop) {
+                dropdownHTML += "<option value='" + stop.stop_name + "'>" + stop.stop_name + " - $" + stop.amount + "</option>";
+            });
+            dropdownHTML += "</select>";
+            dropdownContainer.innerHTML = dropdownHTML;
+        } else {
+            dropdownContainer.innerHTML = "<p>No stops found for this bus number.</p>";
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}">
+        <style>@import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
+
+    .highlight {
+        background: white;
+        }
+        li{
+            border-radius: 20px;
+        }
+        .highlight:hover{
+            cursor:pointer;
+        }
+     body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #444;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .heading {
+            color: #c8102e;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid #c8102e;
+            padding-bottom: 5px;
+        }
+        p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        ul {
+            list-style-type: disc;
+
+            margin-bottom: 20px;
+        }
+        li {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      list-style: none;
+      text-decoration: none;
+      font-family: 'Josefin Sans', sans-serif;
+    }
+
+    body{
+       background-color: #f3f5f9;
+    }
+
+    .wrapper{
+      display: flex;
+      position: relative;
+    }
+
+    .wrapper .sidebar{
+      width: 200px;
+      height: 100%;
+      background: #4b4276;
+      padding: 30px 0px;
+      position: fixed;
+    }
+
+    .wrapper .sidebar h2{
+      color: #fff;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .wrapper .sidebar ul li{
+      padding: 15px;
+      border-bottom: 1px solid #bdb8d7;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .wrapper .sidebar ul li a{
+      color: #bdb8d7;
+      display: block;
+    }
+
+    .wrapper .sidebar ul li a .fas{
+      width: 25px;
+    }
+
+    .wrapper .sidebar ul li:hover{
+      background-color: #594f8d;
+    }
+
+    .wrapper .sidebar ul li:hover a{
+      color: #fff;
+    }
+
+    .wrapper .sidebar .social_media{
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+    }
+
+    .wrapper .sidebar .social_media a{
+      display: block;
+      width: 40px;
+      background: #594f8d;
+      height: 40px;
+      line-height: 45px;
+      text-align: center;
+      margin: 0 5px;
+      color: #bdb8d7;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+
+    .wrapper .main_content{
+      width: 100%;
+      margin-left: 200px;
+    }
+
+    .wrapper .main_content .header{
+      padding: 20px;
+      background: #fff;
+      color: #717171;
+      border-bottom: 1px solid #e0e4e8;
+    }
+
+    .wrapper .main_content .info{
+      margin: 20px;
+      color: #717171;
+      line-height: 25px;
+    }
+    .logout {
+    position: absolute;
+    bottom: 20px; /* Adjust the distance from the bottom as needed */
+    right: 40px;
+    width: 100%;
+    text-align: center;
+}
+
+.logout a {
+    color: #bdb8d7; /* Default color */
+    text-decoration: none;
+}
+
+.logout a:hover {
+    color: #fff; /* Color on hover */
+    height:40px;
+}
+
+    .wrapper .main_content .info div{
+      margin-bottom: 20px;
+    }
+    .dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #4b4276;
+    width:184px;
+
+}
+
+.dropdown-menu a {
+    display: block;
+    color: #14c64d;
+    text-decoration: none;
+    padding: 10px;
+
+}
+
+.dropdown-menu li:hover a {
+    background-color: #594f8d;
+    color: #fff;
+}
+
+    </style>
+    <title>KEC | Kongu Engineering College </title>
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <div class="sidebar">
+            <h2>PROFILE</h2>
+            <ul>
+                <li><a href="{{ url_for('home') }}"><i class="fas fa-home"></i>Home</a></li>
+                <li><a href="{{ url_for('facility') }}"><i class="fas fa-bus"></i>Bus facilities</a></li>
+                <li><a href="{{ url_for('payment') }}" ><i class="fas fa-credit-card"></i>Payment</a></li>
+                <li><a href="{{ url_for('contact') }}"><i class="fas fa-phone"></i>Contact</a></li>
+                <li id="moreDropdown">
+                        <a href="#"><i class="fas fa-info-circle"></i>More</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ url_for('terms') }}">Terms and Conditions</a></li>
+                            <li class="highlight"><a href="{{ url_for('privacy') }}">Privacy Policy</a></li>
+                        </ul>
+                    </li>
+            </ul>
+
+            <div class="logout">
+                    <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+        </div>
+    </div>
+        <div class="main_content">
+
+        </div>
+
+    <script>
+            // JavaScript for handling dropdown menu
+            document.addEventListener("DOMContentLoaded", function() {
+                var moreDropdown = document.getElementById("moreDropdown");
+                var dropdownMenu = moreDropdown.querySelector(".dropdown-menu");
+
+                function handleDropdownItemClick(event) {
+            event.preventDefault();
+            var target = event.target;
+            if (target.tagName === "A") {
+                var href = target.getAttribute("href");
+                if (href) {
+                    window.location.href = href; // Redirect to the link's href
+                }
+            }
+        }
+
+        // Toggle dropdown on click
+        moreDropdown.addEventListener("click", function(event) {
+            event.preventDefault();
+            if (dropdownMenu.style.display === "none" || dropdownMenu.style.display === "") {
+                dropdownMenu.style.display = "block";
+            } else {
+                dropdownMenu.style.display = "none";
+            }
+        });
+
+        // Close dropdown if clicked outside
+        document.addEventListener("click", function(event) {
+            if (!moreDropdown.contains(event.target)) {
+                dropdownMenu.style.display = "none";
+            }
+        });
+
+        // Add click event listener to dropdown menu items
+        dropdownMenu.addEventListener("click", handleDropdownItemClick);
+    });
+        </script>
+
+    <div class="container">
+        <div class="row" style="padding:5px;">
+     
+    <div class="col-md-12" >
+        <h5  class="heading">Refund Policy </h5>
+        <ul>
+        <li> If the Customer leaves the Kongu Engineering College before they complete their service period, there shall be no entitlement to a refund of paid service fees. </li>
+        <li> Refunds, if applicable, at the discretion of the Management, will only be made to the debit/credit card used for the original transaction. For the avoidance of doubt nothing in this Policy shall require the Kongu Engineering College to refund the Fees (or part thereof) unless such Fees (or part thereof) have previously been paid. </li>
+        </ul>
+    </div>
+    <div class="col-md-12" >
+        <h5  class="heading">Privacy Policy </h5>
+        <p> his Privacy Policy applies to all of the products, services and websites offered by Kongu Engineering College. Sometimes, we may post product specific privacy notices or Help Centre materials to explain our products in more detail. </p>
+        <p>If you have any questions about this Privacy Policy, please feel free to contact us through our website or write to us </p>
+        <p>Information we collect and how we use it for our Kongu Engineering College.</p>
+
+    </div>
+    <div class="col-md-12" >
+        <h5  class="heading">Changes to our Privacy Policy </h5>
+        <p> Kongu Engineering College reserves the entire right to modify/amend/remove this privacy statement anytime and without any reason. Nothing contained herein creates or is intended to create a contract/agreement between Kongu Engineering College and any user visiting the Kongu Engineering College website or providing identifying information of any kind.</p>
+    </div>
+
+    <div class="col-md-12" >
+        <h5  class="heading">DND Policy </h5>
+        <p> If you wish to stop any further sms/email alerts/contacts from our side, all you need to do is to send an email:- registrar@kongu.ac.in  with your mobile numbers and you will be excluded from the alerts list.</p>
+    </div>
+</div>
+</div>
+    </body>
+</html>

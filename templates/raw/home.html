@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Feedback, Payment, and Transaction History</title>
+    <style>
+        /* Styles for animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Form styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 0.5s ease forwards;
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+
+        .form-container:hover {
+            transform: translateY(-10px);
+        }
+
+        label,
+        input[type="text"],
+        textarea {
+            display: block;
+            margin-bottom: 15px;
+            width: 100%;
+            border: 0;
+            padding: 10px 5px;
+            background: white no-repeat;
+
+            background-image: linear-gradient(to bottom, #1abc9c, #1abc9c), linear-gradient(to bottom, silver, silver);
+
+            background-size: 0 2px, 100% 1px;
+
+            background-position: 50% 100%, 50% 100%;
+            /* animation solely on background-size */
+            transition: background-size 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+        }
+
+        input[type="text"]:hover,
+        textarea:hover {
+            /* sizes for the 2 images (focus state) */
+            background-size: 100% 2px, 100% 1px;
+            outline: none;
+        }
+
+        button,
+        .buttonClass {
+            background: linear-gradient(#2e466e, #415989);
+            font-size: 14px; /* Adjust font size for buttons */
+            font-family: Arial;
+            width: 100px; /* Reduce button width */
+            height: 40px; /* Reduce button height */
+            border-width: 1px;
+            color: #fff;
+            border-color: #1f2f47;
+            border-radius: 4px;
+            box-shadow: inset 0px 0px 15px 3px #23395e;
+            text-shadow: inset 0px 1px 0px #263666;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover,
+        .buttonClass:hover {
+            background: linear-gradient(#415989, #2e466e);
+        }
+
+        /* Transaction history styles */
+        .transaction-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .transaction-list li {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .transaction-list .hidden {
+            display: none;
+        }
+
+        .paypal-container {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="session-rollno">
+    <!-- Display session roll number here -->
+    {% if 'rollno' in session %}
+    <p>Session Roll Number: {{ session['rollno'] }}</p>
+    {% endif %}
+   <h1>User Details</h1>
+    <ul>
+        <li><strong>Roll No:</strong> {{ user_details[1] }}</li>
+        <li><strong>Password:</strong> {{ user_details[2] }}</li>
+        <li><strong>First Name:</strong> {{ user_details[3] }}</li>
+        <li><strong>Last Name:</strong> {{ user_details[4] }}</li>
+        <li><strong>Email:</strong> {{ user_details[5] }}</li>
+        <li><strong>Stat:</strong> {{ user_details[6] }}</li>
+        <li><strong>Bus Number:</strong> {{ user_details[7] }}</li>
+        <li><strong>Bus Stop:</strong> {{ user_details[8] }}</li>
+    </ul>
+</div>
+    <div class="form-container">
+        <h2>Payment</h2>
+        <form action="/make_payment" method="post">
+            <label for="distance">Distance Travelled (in miles):</label>
+            <input type="text" id="distance" name="distance" required placeholder="Enter distance...">
+            <label for="amount">Amount:</label>
+            <input type="text" id="amount" name="amount" required placeholder="Enter amount...">
+
+            <!-- Trigger PayPal payment when Make Payment button is clicked -->
+            <button type="button" class="buttonClass" onclick="initiatePayPal()">Make Payment</button>
+
+            <!-- PayPal button container -->
+            <div class="paypal-container" id="paypal-button-container"></div>
+        </form>
+    </div>
+
+    <div class="form-container">
+        <h2>Feedback</h2>
+        <form action="/submit_feedback" method="post">
+            <label for="feedback">Your Feedback:</label>
+            <textarea id="feedback" name="feedback" required placeholder="Enter your feedback..."></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div class="form-container">
+        <h2>Transaction History</h2>
+        <ul class="transaction-list">
+            <li class="visible">1 - 2024-03-12 - $50</li>
+            <li class="visible">2 - 2024-03-11 - $100</li>
+            <li class="visible">3 - 2024-03-10 - $75</li>
+        </ul>
+    </div>
+
+    <!-- Include the PayPal JavaScript SDK with Smart Payment Buttons -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AX0Wku0FLQHVVQKt5fvu4XpmraCQKgxKrYa99L4k-EcxANNwO5YDeYfyzBV4BypFj0uY4kng_pd1Qrlp&currency=USD&enable-funding=card"></script>
+
+    <script>
+    // PayPal button initialization
+    function initiatePayPal() {
+        // Render the PayPal Smart Payment Buttons into #paypal-button-container
+        paypal.Buttons({
+            style: {
+                layout: 'horizontal'
+            },
+            createOrder: function (data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '10.00' // Change this value to the desired amount
+                        }
+                    }]
+                });
+            },
+            onApprove: function (data, actions) {
+                return actions.order.capture().then(function (details) {
+                    // Send payment details to the Flask endpoint
+                    sendPaymentDetailsToFlask(details);
+                    // Optionally redirect to a success page or update the UI
+                    alert('Transaction completed by ' + details.payer.name.given_name);
+                });
+            }
+        }).render('#paypal-button-container');
+    }
+
+    // Function to send payment details to Flask endpoint
+    function sendPaymentDetailsToFlask(details) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/payment_success", true);
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log("Payment details sent to Flask");
+            }
+        };
+        xhr.send(JSON.stringify(details));
+    }
+</script>
+
+</body>
+
+</html>
