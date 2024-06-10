@@ -26,6 +26,9 @@
         th {
             background-color: #108429;
         }
+        .bus{
+            text-align: center;
+        }
         tr:nth-child(even) {
             background-color: #f2f2f2;
         }
@@ -35,7 +38,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 5px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 8%;
+            width: 100%;
         }
 
         nav ul {
@@ -68,6 +75,9 @@
         .logout a:hover {
             color: #fff;
         }
+        body{
+            padding-top: 60px;
+        }
     </style>
 </head>
 <body>
@@ -76,12 +86,12 @@
             <li><a href="/admin">Admin</a></li>
             <li><a href="/transport">Bus Details</a></li>
              <li><a href="/student">Student details</a></li>
-        </ul>
+        </ul>   
         <div class="logout">
             <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </div>
     </nav>
-    <h1>Bus Details</h1>
+    <h1 class="bus">Bus Details</h1>
 
     <!-- Form to select bus number -->
     <form method="POST" action="/show_transport">
