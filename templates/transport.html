@@ -78,6 +78,21 @@
         body{
             padding-top: 60px;
         }
+        .fas{
+            margin-right: px;
+        }
+        .log{
+            margin-right: 20px;
+        }
+        .bus_number{
+            margin-top: 50px;
+            text-align: center;
+          
+        }
+        .bus_details{
+            margin-top: 30px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -88,14 +103,15 @@
              <li><a href="/student">Student details</a></li>
         </ul>   
         <div class="logout">
-            <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            <a href="/logout" class="log"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </div>
     </nav>
     <h1 class="bus">Bus Details</h1>
 
     <!-- Form to select bus number -->
     <form method="POST" action="/show_transport">
-        <label for="bus_number">Select Bus Number:</label>
+        <div class="bus_number">
+        <label for="bus_number" >Select Bus Number:</label>
         <select id="bus_number" name="bus_number">
             <option value="">All</option>
             {% for bus_number in bus_numbers %}
@@ -103,10 +119,11 @@
             {% endfor %}
         </select>
         <button type="submit">Show Details</button>
+    </div>
     </form>
-
-    <!-- Table to display bus details -->
+    <div class="bus_details">
     {% if bus_details %}
+
     <table border="1">
         <tr>
             <th>Bus Number</th>
@@ -120,6 +137,7 @@
             <td>${{ bus_detail[2] }}</td>
         </tr>
         {% endfor %}
+    </div>
     </table>
     {% endif %}
 </body>
