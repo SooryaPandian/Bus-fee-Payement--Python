@@ -20,20 +20,35 @@
             margin: auto;
             border-collapse: collapse;
         }
+
+        table {
+
+            border-collapse: collapse;
+            padding: 0px 10px 0px 10px;
+        }
+
         th, td {
-            padding: 10px;
+            padding: 8px;
+            text-align: center;
             border-bottom: 1px solid #ddd;
-            text-align: left;
         }
+
         th {
-            background-color: #f2f2f2;
+            background-color: #4CAF50;
+            color: white;
         }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
+
+        tr {
+            background-color: #333;
+            color: white;
+            transition: background-color 0.5s, color 0.5s;
         }
+
         tr:hover {
-            background-color: #f5f5f5;
+            background-color: #ccc;
+            color: black;
         }
+
         label {
             font-weight: bold;
             margin-right: 10px;
