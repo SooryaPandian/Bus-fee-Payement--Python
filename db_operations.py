@@ -6,7 +6,7 @@ def connect_db():
         conn = mysql.connector.connect(
             host='localhost',
             user='root',
-            password='2511',
+            password='soorya',
             database='busfee'
         )
         print("Database connected successfully")
@@ -88,6 +88,7 @@ def update_user_status(rollno,transaction_id):
     try:
         conn = connect_db()
         cur = conn.cursor()
+
         cur.execute("UPDATE user SET stat = TRUE WHERE rollno = %s", (rollno,))
         cur.execute("UPDATE transactions SET status = TRUE WHERE transaction_id = %s", (transaction_id,))
         print(f"updated status for the transaction id :{transaction_id}")

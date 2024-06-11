@@ -337,6 +337,38 @@
     </script>
          </script>
      <!-- Include the PayPal JavaScript SDK with Smart Payment Buttons -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AX0Wku0FLQHVVQKt5fvu4XpmraCQKgxKrYa99L4k-EcxANNwO5YDeYfyzBV4BypFj0uY4kng_pd1Qrlp&currency=USD&enable-funding=card"></script>
+
+    <script>
+    // PayPal button initialization
+    function initiatePayPal() {
+        // Render the PayPal Smart Payment Buttons into #paypal-button-container
+        paypal.Buttons({
+            style: {
+                layout: 'horizontal'
+            },
+            createOrder: function (data, actions) {
+                // Call the Flask endpoint to create a transaction ID
+                createTransactionId();
+                // Create the PayPal order
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: "{{ session.amount }}" // Change this value to the desired amount
+                        }
+                    }]
+                });
+            },
+            onApprove: function (data, actions) {
+                return actions.order.capture().then(function (details) {
+                    // Send payment details to the Flask endpoint
+                    sendPaymentDetailsToFlask(details);
+                    // Optionally redirect to a success page or update the UI
+                    alert('Transaction completed by ' + details.payer.name.given_name);
+                });
+            }
+        }).render('#paypal-button-container');
+    }
 
     // Function to call the Flask endpoint to create a transaction ID
     function createTransactionId() {

@@ -4,8 +4,8 @@ from db_operations import *
 app = Flask(__name__)
 app.secret_key = 'ehorizon project'
 
+transaction_id_global = "None"
 
-transactionId= "None"
 @app.route("/show_transport", methods=["GET", "POST"])
 def bus_details():
     # Fetch bus numbers from the busdetails table
@@ -26,7 +26,10 @@ def bus_details():
 
 @app.route('/transport')
 def transport():
-    return render_template('transport.html')
+    bus_numbers = fetch_bus_numbers()
+    bus_details = fetch_all_bus_details()
+    return render_template('transport.html',bus_numbers=bus_numbers, bus_details=bus_details)
+
 @app.route("/", methods=["GET", "POST"])
 def login():
     error = None
@@ -60,11 +63,11 @@ def login():
             error = "Invalid credentials. Please try again."
     return render_template("login.html", error=error)
 
-
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect(url_for("login"))
+
 @app.route("/facility")
 def facility():
     return  render_template("busfacility.html")
@@ -95,7 +98,6 @@ def register():
     return render_template("login.html")
 
 # Function to update the status field in the user table
-
 @app.route("/payment_success", methods=["POST"])
 def payment_success():
     print("payment_success called")
@@ -105,15 +107,15 @@ def payment_success():
         # Retrieve the rollno from the session
         rollno = session.get("rollno")
         # Process the success message and update the user status
+        print("inside payment_success received :",globals()['transaction_id_global'])
         if rollno:
-            update_user_status(rollno,globals()['transactionId'])
-            transactionId= "None"
+            update_user_status(rollno,globals()['transaction_id_global'])
+            globals()['transaction_id_global'] = "None"
         print(f"Payment successful for {payer_name}")
         return jsonify({"status": "success"})
     except Exception as e:
         print("Error processing payment success:", str(e))
         return jsonify({"status": "error"})
-
 
 # Route for creating a new transaction ID and storing transaction details
 @app.route("/create_transaction_id", methods=["GET"])
@@ -129,8 +131,8 @@ def create_transaction_id_endpoint():
 
         # Generate transaction ID
         transaction_id = create_transaction_id(rollno)
-        print("transction id is"+transaction_id)
-        globals()['transaction_id']=transaction_id
+        print("transction id is" + transaction_id)
+        globals()['transaction_id_global'] = transaction_id
         # Add transaction details to the database
         conn = connect_db()
         cur = conn.cursor()
@@ -143,7 +145,6 @@ def create_transaction_id_endpoint():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
 @app.route("/home")
 def home():
     rollno = session.get("rollno")
@@ -153,6 +154,7 @@ def home():
     else:
         # Redirect to login if the roll number is not available in the session
         return redirect(url_for("login"))
+
 @app.route("/payment")
 def payment():
     rollno = session.get("rollno")
@@ -165,6 +167,7 @@ def payment():
     else:
         # Redirect to login if the roll number is not available in the session
         return redirect(url_for("login"))
+
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
@@ -177,13 +180,9 @@ def privacy():
 def terms():
     return render_template("terms.html")
 
-
-
 # Fetch students based on filtering options
 
-
 # Fetch unique bus numbers from the users table
-
 
 # Function to handle the admin panel route
 @app.route("/admin", methods=["GET", "POST"])
@@ -195,12 +194,13 @@ def admin():
     if request.method == "POST":
         bus_number_filter = request.form.get("bus_number")
         paid_status_filter = request.form.get("paid_status")
-        print("deatils from the form ", bus_number_filter, paid_status_filter,end=" ")
+        print("details from the form ", bus_number_filter, paid_status_filter, end=" ")
         students = fetch_students(bus_number_filter, paid_status_filter)
     else:
         students = fetch_students()
-        print("THE STUDENT LIST :",students)
+        print("THE STUDENT LIST :", students)
     return render_template("admin.html", bus_numbers=bus_numbers, students=students)
+
 @app.route("/student_get", methods=["GET", "POST"])
 def student():
     # Fetch students data based on filtering options
@@ -210,9 +210,11 @@ def student():
         print(rollno)
         student = fetch_user_details(rollno)
 
-    return render_template("student.html",student=student)
+    return render_template("student.html", student=student)
+
 @app.route("/student")
 def detail():
     return render_template('student.html')
+
 if __name__ == "__main__":
     app.run(debug=True)
