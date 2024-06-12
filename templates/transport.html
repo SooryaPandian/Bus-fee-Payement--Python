@@ -9,19 +9,24 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            padding-top: 60px; /* To account for the fixed navbar */
+            margin: 0;
         }
         h1 {
             color: #333;
+            text-align: center;
+            margin-bottom: 20px;
         }
 
         .table-container {
-            padding-top: 80px; /* To account for the fixed navbar */
+            padding: 0px 25px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            padding: 0px 10px 0px 10px;
+            margin-top: 20px;
         }
 
         th, td {
@@ -46,16 +51,13 @@
             color: black;
         }
 
-        .bus{
-            text-align: center;
-        }
         nav {
             background-color: #333;
             overflow: hidden;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 5px 3px;
+            padding: 6px 5px;
             width: 100%;
             position: fixed;
             top: 0;
@@ -67,6 +69,7 @@
         .nav-links {
             display: flex;
             align-items: center;
+            
         }
 
         .nav-links li {
@@ -99,8 +102,9 @@
         .nav-links li a:hover:before {
             width: 100%;
         }
+
         .logout a {
-            color: #bdb8d7;
+            color: #4CAF50;
             text-decoration: none;
             margin-right: 40px;
             transition: color 0.3s ease;
@@ -109,23 +113,32 @@
         .logout a:hover {
             color: #fff;
         }
-        body{
-            padding-top: 60px;
-        }
-        .fas{
-            margin-right: px;
-        }
-        .log{
-            margin-right: 20px;
-        }
-        .bus_number{
-            margin-top: 50px;
+
+        .bus_number, .bus_details {
             text-align: center;
-          
-        }
-        .bus_details{
             margin-top: 30px;
-            text-align: center;
+        }
+
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        .bus_number select {
+            padding: 8px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
     </style>
 </head>
@@ -134,18 +147,18 @@
         <ul class="nav-links">
             <li><a href="/admin">Admin</a></li>
             <li><a href="/transport">Bus Details</a></li>
-             <li><a href="/student">Student details</a></li>
-        </ul>   
+            <li><a href="/student">Student Details</a></li>
+        </ul>
         <div class="logout">
             <a href="/logout" class="log"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </div>
     </nav>
+
     <h1 class="bus">Bus Details</h1>
 
     <!-- Form to select bus number -->
-    <form method="POST" action="/show_transport">
-        <div class="bus_number">
-        <label for="bus_number" >Select Bus Number:</label>
+    <form method="POST" action="/show_transport" class="bus_number">
+        <label for="bus_number">Select Bus Number:</label>
         <select id="bus_number" name="bus_number">
             <option value="">All</option>
             {% for bus_number in bus_numbers %}
@@ -153,26 +166,30 @@
             {% endfor %}
         </select>
         <button type="submit">Show Details</button>
-    </div>
     </form>
-    <div class="bus_details">
-    {% if bus_details %}
 
-    <table border="1">
-        <tr>
-            <th>Bus Number</th>
-            <th>Route</th>
-            <th>Amount</th>
-        </tr>
-        {% for bus_detail in bus_details %}
-        <tr>
-            <td>{{ bus_detail[0] }}</td>
-            <td>{{ bus_detail[1] }}</td>
-            <td>${{ bus_detail[2] }}</td>
-        </tr>
-        {% endfor %}
+    <!-- Table to Display Bus Data -->
+    <div class="table-container bus_details">
+        {% if bus_details %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Bus Number</th>
+                    <th>Route</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bus_detail in bus_details %}
+                <tr>
+                    <td>{{ bus_detail[0] }}</td>
+                    <td>{{ bus_detail[1] }}</td>
+                    <td>${{ bus_detail[2] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
     </div>
-    </table>
-    {% endif %}
 </body>
 </html>
