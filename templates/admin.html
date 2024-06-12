@@ -203,27 +203,12 @@
                 {% for student in students %}
                     <tr>
                         <td>{{ student['rollno'] }}</td>
-                        <td>{{ student['firstname'] }} {{ student['lastname'] }}</td>
+                        <td>{{ student['firstname'] }} </td>
                         <td>{{ student['busnumber'] }}</td>
                         <td>{{ "Paid" if student['stat'] else "Not Paid" }}</td>
                     </tr>
                 {% endfor %}
-                {% for student in students %}
-                    <tr>
-                        <td>{{ student['rollno'] }}</td>
-                        <td>{{ student['firstname'] }} {{ student['lastname'] }}</td>
-                        <td>{{ student['busnumber'] }}</td>
-                        <td>{{ "Paid" if student['stat'] else "Not Paid" }}</td>
-                    </tr>
-                {% endfor %}
-                {% for student in students %}
-                    <tr>
-                        <td>{{ student['rollno'] }}</td>
-                        <td>{{ student['firstname'] }} {{ student['lastname'] }}</td>
-                        <td>{{ student['busnumber'] }}</td>
-                        <td>{{ "Paid" if student['stat'] else "Not Paid" }}</td>
-                    </tr>
-                {% endfor %}
+              
             </tbody>
         </table>
     </div>
